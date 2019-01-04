@@ -38,7 +38,7 @@
     tls off
 }
 :9100 {
-    proxy / exporter:9100 {
+    proxy / node-exporter:9100 {
             transparent
         }
 
