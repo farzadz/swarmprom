@@ -37,4 +37,19 @@
     errors stderr
     tls off
 }
+:9100 {
+    proxy / exporter:9100 {
+            transparent
+        }
 
+    errors stderr
+    tls off
+}
+:8080 {
+    proxy / cadvisor:8080 {
+            transparent
+        }
+
+    errors stderr
+    tls off
+}
