@@ -15,7 +15,6 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 4,
   "links": [],
   "panels": [
     {
@@ -380,9 +379,11 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "(node_filesystem_free_bytes{mountpoint=\"/rootfs/mnt/jhvolume\",fstype=\"nfs4\"}) * 100 / node_filesystem_size_bytes{mountpoint=\"/rootfs/mnt/jhvolume\",fstype=\"nfs4\"}",
+          "expr": "topk(1,node_filesystem_free_bytes{mountpoint=\"/rootfs/mnt/jhvolume\",fstype=\"nfs4\"}) * 100 / topk(1,node_filesystem_size_bytes{mountpoint=\"/rootfs/mnt/jhvolume\",fstype=\"nfs4\"})",
           "format": "time_series",
           "hide": false,
+          "instant": true,
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "",
           "refId": "A",
@@ -441,5 +442,5 @@
   "timezone": "",
   "title": "Jupyterhub Dashboard",
   "uid": "rHQaIHwiz",
-  "version": 12
+  "version": 13
 }
