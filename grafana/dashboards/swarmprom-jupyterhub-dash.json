@@ -15,6 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
+  "id": 5,
   "links": [],
   "panels": [
     {
@@ -57,7 +58,7 @@
           "expr": "sum by (status) (server_spawn_duration_seconds_count)\n",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "",
+          "legendFormat": "{{ status }}",
           "refId": "A"
         }
       ],
@@ -200,17 +201,19 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "(node_filesystem_size_bytes{mountpoint=~\"/rootfs/mnt/.*\", fstype=~\"nfs.*\"} - node_filesystem_free_bytes{mountpoint=\"/rootfs/mnt/jhvolume\", fstype=~\"nfs.*\"}) / 1073741824",
+          "expr": "topk(1, node_filesystem_size_bytes{mountpoint=~\"/rootfs/mnt/.*\", fstype=~\"nfs.*\"} - node_filesystem_free_bytes{mountpoint=\"/rootfs/mnt/jhvolume\", fstype=~\"nfs.*\"})",
           "format": "time_series",
           "hide": false,
+          "instant": false,
           "intervalFactor": 1,
           "legendFormat": "Total GiB Used {{ mountpoint }}",
           "refId": "A"
         },
         {
-          "expr": "node_filesystem_size_bytes{mountpoint=~\"/rootfs/mnt/.*\", fstype=~\"nfs.*\"} / 1073741824",
+          "expr": "topk(1,node_filesystem_size_bytes{mountpoint=~\"/rootfs/mnt/.*\", fstype=~\"nfs.*\"}) ",
           "format": "time_series",
           "hide": false,
+          "instant": false,
           "intervalFactor": 1,
           "legendFormat": "Total GiB Size {{ mountpoint }}",
           "refId": "B"
@@ -236,7 +239,7 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "format": "bytes",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -286,7 +289,7 @@
       "links": [],
       "targets": [
         {
-          "expr": "server_spawn_duration_seconds_bucket{status=\"success\"}",
+          "expr": "increase(server_spawn_duration_seconds_bucket{status=\"success\"} [$__interval])",
           "format": "heatmap",
           "instant": false,
           "intervalFactor": 1,
@@ -379,11 +382,10 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "topk(1,node_filesystem_free_bytes{mountpoint=\"/rootfs/mnt/jhvolume\",fstype=\"nfs4\"}) * 100 / topk(1,node_filesystem_size_bytes{mountpoint=\"/rootfs/mnt/jhvolume\",fstype=\"nfs4\"})",
+          "expr": "topk(1, node_filesystem_free_bytes{mountpoint=\"/rootfs/mnt/jhvolume\",fstype=\"nfs4\"}) * 100 / topk(1,node_filesystem_size_bytes{mountpoint=\"/rootfs/mnt/jhvolume\",fstype=\"nfs4\"})",
           "format": "time_series",
           "hide": false,
           "instant": true,
-          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "",
           "refId": "A",
@@ -392,6 +394,94 @@
       ],
       "thresholds": "10,25,100",
       "title": "Available Disk Space",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "rgba(245, 54, 54, 0.9)",
+        "rgba(237, 129, 40, 0.89)",
+        "rgba(50, 172, 45, 0.97)"
+      ],
+      "datasource": null,
+      "decimals": 1,
+      "format": "decbytes",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 18
+      },
+      "hideTimeOverride": true,
+      "id": 15,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "sum(node_filesystem_size_bytes{mountpoint=~\"/rootfs/mnt/.*\", fstype=~\"nfs.*\"})",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "intervalFactor": 2,
+          "legendFormat": "",
+          "refId": "A",
+          "step": 20
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Total NFS Disk Space",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -440,7 +530,7 @@
     ]
   },
   "timezone": "",
-  "title": "Jupyterhub Dashboard",
-  "uid": "rHQaIHwiz",
-  "version": 13
+  "title": "Jupyterhub Dashboard Copy",
+  "uid": "qyt1ZKwiz",
+  "version": 4
 }
