@@ -111,7 +111,7 @@
       "color": {
         "cardColor": "#b4ff00",
         "colorScale": "sqrt",
-        "colorScheme": "interpolateOranges",
+        "colorScheme": "interpolateSpectral",
         "exponent": 0.5,
         "mode": "spectrum"
       },
@@ -132,7 +132,7 @@
       "links": [],
       "targets": [
         {
-          "expr": "server_spawn_duration_seconds_bucket{status=\"failure\"}",
+          "expr": "sum(increase(server_spawn_duration_seconds_bucket{status=\"failure\"} [5m])) by (le)",
           "format": "heatmap",
           "instant": false,
           "intervalFactor": 1,
@@ -268,7 +268,7 @@
       "color": {
         "cardColor": "#b4ff00",
         "colorScale": "sqrt",
-        "colorScheme": "interpolateOranges",
+        "colorScheme": "interpolateSpectral",
         "exponent": 0.5,
         "mode": "spectrum"
       },
@@ -289,7 +289,7 @@
       "links": [],
       "targets": [
         {
-          "expr": "increase(server_spawn_duration_seconds_bucket{status=\"success\"} [$__interval])",
+          "expr": "sum(increase(server_spawn_duration_seconds_bucket{status=\"success\"} [5m])) by (le)",
           "format": "heatmap",
           "instant": false,
           "intervalFactor": 1,
@@ -416,7 +416,7 @@
       ],
       "datasource": null,
       "decimals": 1,
-      "format": "decbytes",
+      "format": "bytes",
       "gauge": {
         "maxValue": 100,
         "minValue": 0,
@@ -530,7 +530,7 @@
     ]
   },
   "timezone": "",
-  "title": "Jupyterhub Dashboard Copy",
+  "title": "Jupyterhub Dashboard",
   "uid": "qyt1ZKwiz",
-  "version": 4
+  "version": 5
 }

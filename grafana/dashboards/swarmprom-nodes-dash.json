@@ -16,7 +16,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1547544100285,
+  "id": 1,
+  "iteration": 1548113114115,
   "links": [],
   "panels": [
     {
@@ -719,7 +720,7 @@
       ],
       "datasource": null,
       "decimals": 1,
-      "format": "decbytes",
+      "format": "bytes",
       "gauge": {
         "maxValue": 100,
         "minValue": 0,
@@ -857,8 +858,6 @@
         {
           "expr": "sum((node_filesystem_free_bytes{mountpoint=\"/rootfs\"} / node_filesystem_size_bytes{mountpoint=\"/rootfs\"}) * on(instance) group_left(node_name) node_meta{node_id=~\"$node_id\"} * 100) / count(node_meta * on(instance) group_left(node_name) node_meta{node_id=~\"$node_id\"})",
           "format": "time_series",
-          "hide": false,
-          "instant": false,
           "intervalFactor": 2,
           "legendFormat": "",
           "refId": "A",
@@ -1593,7 +1592,6 @@
       {
         "allValue": ".+",
         "current": {
-          "tags": [],
           "text": "All",
           "value": "$__all"
         },
